@@ -34,8 +34,11 @@ class Spider:
         url_s = quote(url, safe=string.printable)
         self.url = url_s
 
-    # Get the video list from html
     def Get_list(self):
+        """
+        Get the video list from html
+        :return:
+        """
         # get the html by keyword
         main_res = request.urlopen(self.url)
         result_html = main_res.read()
@@ -57,18 +60,26 @@ class Spider:
         for list in play_soup.find_all('a', attrs={'_stat': "videolist:click"})[5:]:
             self.links.append('https://v.qq.com' + list['href'])
 
-    # Download the video
-    def Downloader(self):
+    def free_Downloader(self):
+        """
+        Download the video
+        # @ http://vv.video.qq.com/getinfo : the API that get 270p json from v.qq.com
+        # @ http://vv.video.qq.com/getkey  : the API that get 480p json from v.qq.com
+        :return:
+        """
         self.Get_list()
+
 
         for link in self.links:
             # Split the id of video
             vid = ((link.split('.', 5)[-2]).split('/'))[-1]
+
+            # ==================================================================================================
             get_json = request.urlopen("http://vv.video.qq.com/getinfo?vids=" + vid +
                                        "&platform=101001&charge=0&otype=json&defn=shd")
             get_json = get_json.read().decode('utf-8')[len('QZOutputJson='): -1]
             tempStr = json.loads(get_json)
-            # v_360p_url = tempStr['vl']['vi'][0]['ul']['ui'][0]['url']+\
+            # v_270p_url = tempStr['vl']['vi'][0]['ul']['ui'][0]['url']+\
             #              tempStr['vl']['vi'][0]['fn']+"?vkey="+tempStr['vl']['vi'][0]['fvkey']
 
             # get the 480p
@@ -88,7 +99,25 @@ class Spider:
                 f.write(res)
             print("Download completed!")
 
+    def vip_Downloader(self):
+        """
+        # @ http://tv.wandhi.com/go.html?url=  : the API_01 that can extract vip from v.qq.com
+        # @ https://play.fo97.cn/?url=  : 全网vip
+        # @ http://www.guandianzhiku.com/v/s/?url= : 智库解析
+        :return:
+        """
+        self.Get_list()
+
+        link = self.links[1]
+        # This part can download the vip video from v.qq.com
+        url = 'https://play.fo97.cn/?url= ' + link
+        vip_html = request.urlopen(url).read().decode('utf-8')
+        vip_soup = BeautifulSoup(vip_html, 'html.parser')
+        print(vip_html)
+        # for list in vip_soup.find_all('video'):
+        #    print(list)
+
 
 if __name__ == '__main__':
     spider = Spider('http://v.qq.com/x/search/?q=假面骑士创骑')
-    spider.Downloader()
+    spider.vip_Downloader()
