@@ -17,6 +17,10 @@ import string
 from bs4 import BeautifulSoup
 import json
 from selenium import webdriver
+from selenium.webdriver import ActionChains
+import time
+import pyautogui
+import pyperclip
 
 
 class Spider:
@@ -102,7 +106,7 @@ class Spider:
 
     def vip_Downloader(self):
         """
-        # @ https://play.fo97.cn/?url=  : 全网vip
+        # @ https://play.fo97.cn/?url= : 全网vip
         # @ http://www.guandianzhiku.com/v/s/?url= : 智库解析
         # @ https://www.ckmov.vip/api.php?url= : 解析系统
         :return:
@@ -112,16 +116,28 @@ class Spider:
 
         link = self.links[1]
         # This part can download the vip video from v.qq.com
-        url = 'https://www.ckmov.vip/api.php?url= ' + link
-
+        url = 'https://play.fo97.cn/?url=' + link
         browser = webdriver.Chrome(executable_path='./chromedriver')
-        vip_html = browser.get(url)
-        print(vip_html)
-        # browser.close()
-        # browser.quit()
+        browser.get(url)
+        time.sleep(30)
+        display = browser.find_element_by_xpath("//iframe")
+        rightclick = ActionChains(browser)
+        rightclick.context_click(display).perform()
+        time.sleep(5)
+        pyautogui.typewrite(['down', 'down', 'down', 'down'])
+        time.sleep(5)
+        browser.close()
+        browser.quit()
 
         # for list in vip_soup.find_all('video'):
         #    print(list)
+
+    def get_clipboard(self):
+        """
+        To get the content of clipboard
+        :return:
+        """
+
 
 
 if __name__ == '__main__':
