@@ -16,6 +16,7 @@ from urllib.parse import quote
 import string
 from bs4 import BeautifulSoup
 import json
+from selenium import webdriver
 
 
 class Spider:
@@ -105,15 +106,20 @@ class Spider:
         # @ https://play.fo97.cn/?url=  : 全网vip
         # @ http://www.guandianzhiku.com/v/s/?url= : 智库解析
         :return:
+
         """
         self.Get_list()
 
         link = self.links[1]
         # This part can download the vip video from v.qq.com
         url = 'https://play.fo97.cn/?url= ' + link
-        vip_html = request.urlopen(url).read().decode('utf-8')
-        vip_soup = BeautifulSoup(vip_html, 'html.parser')
+
+        browser = webdriver.Chrome()
+        vip_html = browser.get(url).page_source
         print(vip_html)
+        browser.close()
+        browser.quit()
+
         # for list in vip_soup.find_all('video'):
         #    print(list)
 
