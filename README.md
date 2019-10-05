@@ -29,6 +29,7 @@ This class is used to get the API, only have these API can you download the vip 
 1. You have to rewrite the function Get_list() when you want to download different video
 2. You have to wait and do not move the mouse out of the browser which will get a wrong reslut
 3. Didn't change the API automatically, you have to try which one can download the vip video.
+4. Course the lib win32, the program only run in Windows!
 
 #### 5. About
 If you have any questions, email me in szbltyy@hotmail.com
