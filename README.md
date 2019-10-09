@@ -7,7 +7,7 @@ This is a project that could download the free or vip video from [Tencent video]
 * **bs4.BeautifulSoup**: to extract the source from html
 * **selenium.webdriver**: to simulate the action of web browser
 * **selenium.webdriver.ActionChains**: to simulate the action of mouse
-* **import win32clipboard**: to get the conten from clipboard
+* **win32clipboard**: to get the conten from clipboard
 * **pyautogui**: click the browser
 
 #### 2. the class: API
@@ -32,4 +32,4 @@ This class is used to get the API, only have these API can you download the vip 
 4. Course the lib win32, the program only run in Windows!
 
 #### 5. About
-If you have any questions, email me in szbltyy@hotmail.com
+If you have any questions, email me in szbltyy@hotmail.com. And, if you want to know more about this prject, click [here](https://www.jianshu.com/p/c67f4223dc06) to go to the artcle for this project or click my [blog main page](https://www.jianshu.com/u/a671f9f312d2) .
